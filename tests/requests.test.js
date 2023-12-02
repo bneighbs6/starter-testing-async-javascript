@@ -34,8 +34,15 @@ describe("requests.js", () => {
     });
 
     it("should return a list of constellations with fewer than 10 stars with planets", async () => {
-      // Write code here
-      expect(1).toBe(2);
+      jest.spyOn(axios, "get");
+      axios.get.mockImplementation(() => Promise.resolve({ data }));
+    
+      const response = await index();
+    
+      const expected = data.slice(0, 2);
+      expect(response).toEqual(expected);
+    
+      jest.clearAllMocks();
     });
 
     it("should log an error to the console", async () => {
@@ -45,14 +52,3 @@ describe("requests.js", () => {
   });
 });
 
-it("should return a list of constellations with fewer than 10 stars with planets", async () => {
-  jest.spyOn(axios, "get");
-  axios.get.mockImplementation(() => Promise.resolve({ data }));
-
-  const response = await index();
-
-  const expected = data.slice(0, 2);
-  expect(response).toEqual(expected);
-
-  jest.clearAllMocks();
-});
