@@ -46,8 +46,18 @@ describe("requests.js", () => {
     });
 
     it("should log an error to the console", async () => {
-      // Write code here
-      expect(1).toBe(2);
+      jest.spyOn(axios, "get");
+        axios.get.mockImplementation(() =>
+        Promise.reject(new Error("Request failed."))
+      );
+  
+      jest.spyOn(console, "error");
+
+      await index();
+
+      expect(console.error).toHaveBeenCalledWith("Request failed.");
+
+      jest.clearAllMocks();
     });
   });
 });
